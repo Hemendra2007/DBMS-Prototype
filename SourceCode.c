@@ -1,20 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <dirent.h>
-
-int equal_string(char *x, char *y){
-	int i=0;
-	while(*(x+i)!='\0'){
-		if(*(x+i)!=*(y+i)){
-			return 0;
-		}
-		i++;
-	}
-	if(*(y+i)!='\0'){
-		return 0;
-	}
-	return 1;
-}
+#include <string.h>
 
 void main(){
 	DIR* datafile=opendir("Data");
@@ -31,10 +18,10 @@ void main(){
 	printf(">>>");
 	scanf("%s",input1);
 	
-	if(equal_string(input1,"create")){
+	if(!strcmp(input1,"create")){
 		scanf("%s",input1);
 
-		if(equal_string(input1,"database")){
+		if(!strcmp(input1,"database")){
 			scanf("%s",input1);
 			
 			char location[]="Data/";
@@ -55,7 +42,7 @@ void main(){
 			}
 			
 		}
-		else if(equal_string(input1,"table")){
+		else if(!strcmp(input1,"table")){
 			scanf("%s",input1);
 			char database[]="Data/";
 			strcat(database,input1);
@@ -83,13 +70,13 @@ void main(){
 					FILE* table_in_use=fopen(sample_loc,"w");
 					
 					scanf("%s",input1);
-					if(equal_string(input1,"(")){
+					if(!strcmp(input1,"(")){
 						scanf("%s",input1);
 						
 						char table_struct_heading[10000];
 						int table_struct_heading_size=0;
 						
-						while(!equal_string(input1,")")){
+						while(!!strcmp(input1,")")){
 							char column[100];
 							strcpy(column,input1);
 							strcat(column,", ");
@@ -137,7 +124,7 @@ void main(){
 			goto Start;
 		}
 	}
-	else if(equal_string(input1,"insert")){
+	else if(!strcmp(input1,"insert")){
 		scanf("%s",input1);
 		char loc[]="Data/";
 			strcat(loc,input1);
@@ -197,10 +184,10 @@ void main(){
 				goto Start;
 			}
 	}
-	else if(equal_string(input1,"show")){
+	else if(!strcmp(input1,"show")){
 		scanf("%s",input1);
 		
-		if(equal_string(input1,"databases")){
+		if(!strcmp(input1,"databases")){
 			printf("\n------------------\n");
 			printf("Databases:\n------------------\n");
 			DIR* d=opendir("Data");
@@ -214,7 +201,7 @@ void main(){
 			fflush(stdin);
 			goto Start;
 		}
-		else if(equal_string(input1,"tables")){
+		else if(!strcmp(input1,"tables")){
 			scanf("%s",input1);
 			char database[]="Data/";
 			strcat(database,input1);
@@ -255,7 +242,7 @@ void main(){
 			goto Start;
 		}
 	}
-	else if(equal_string(input1,"view")){
+	else if(!strcmp(input1,"view")){
 		scanf("%s",input1);
 		char database[]="Data/";
 		strcat(database,input1);
@@ -318,10 +305,10 @@ void main(){
 			goto Start;
 		}
 	}
-	else if(equal_string(input1,"drop")){
+	else if(!strcmp(input1,"drop")){
 		scanf("%s",input1);
 		
-		if(equal_string(input1,"database")){
+		if(!strcmp(input1,"database")){
 			scanf("%s",input1);
 			char loc[]="Data/";
 			strcat(loc,input1);
@@ -340,7 +327,7 @@ void main(){
 				goto Start;
 			}
 		}
-		else if(equal_string(input1,"table")){
+		else if(!strcmp(input1,"table")){
 			scanf("%s",input1);
 			char loc[]="Data/";
 			strcat(loc,input1);
@@ -378,7 +365,7 @@ void main(){
 			goto Start;
 		}
 	}
-	else if(equal_string(input1,"delete")){
+	else if(!strcmp(input1,"delete")){
 		scanf("%s",input1);
 		char loc[]="Data/";
 		strcat(loc,input1);
@@ -455,6 +442,14 @@ void main(){
 				goto Start;
 			}
 		}
+		else{
+			printf("Database %s doesn't exists.\n",input1);
+			fflush(stdin);
+			goto Start;
+		}
+	}
+	else if(!strcmp(input1,"exit")){
+		return;
 	}
 	else{
 		printf("Invalid command!\n");
