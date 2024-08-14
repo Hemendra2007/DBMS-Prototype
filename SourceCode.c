@@ -10,6 +10,9 @@ int equal_string(char *x, char *y){
 		}
 		i++;
 	}
+	if(*(y+i)!='\0'){
+		return 0;
+	}
 	return 1;
 }
 
@@ -21,10 +24,11 @@ void main(){
 	else{
 		mkdir("Data");
 	}
-  
+	
 	char input1[100];
 	printf("Welcome to MiniDB Manager!\n");
 	Start:
+	printf(">>>");
 	scanf("%s",input1);
 	
 	if(equal_string(input1,"create")){
@@ -103,12 +107,39 @@ void main(){
 						fflush(stdin);
 						goto Start;
 					}
-        }
-      }
+					
+					else{
+						char ar[]="Error at '";
+						strcat(ar,input1);
+						strcat(ar,"', expected ' ( ' .\n");
+						fclose(table_in_use);
+						remove(sample_loc);
+						printf(ar);
+						fflush(stdin);
+						goto Start;
+					}
+				}
+				
+			}
+			else{
+				printf("Database %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+
 		}
 		else{
+			char ar[]="Error at ";
+			strcat(ar,input1);
+			strcat(ar,"\n");
+			printf(ar);
 			fflush(stdin); 
 			goto Start;
 		}
-  }
+	}
+	else{
+		printf("Invalid command!\n");
+		fflush(stdin);
+		goto Start;
+	}
 }
