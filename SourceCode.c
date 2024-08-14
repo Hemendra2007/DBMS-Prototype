@@ -378,6 +378,84 @@ void main(){
 			goto Start;
 		}
 	}
+	else if(equal_string(input1,"delete")){
+		scanf("%s",input1);
+		char loc[]="Data/";
+		strcat(loc,input1);
+		
+		DIR* dir=opendir(loc);
+		if(dir){
+			closedir(dir);
+			scanf("%s",input1);
+			strcat(loc,"/");
+			strcat(loc,input1);
+			strcat(loc,".csv");
+			FILE *filepath=fopen(loc,"r");
+			if(filepath){
+				int row;
+				scanf("%d",&row);
+				if(row<=0){
+					printf("Invalid row!\n");
+					fflush(stdin);
+					goto Start;
+				}
+				char reader;
+				char datastring[10000];
+				int i=0;
+				reader=fgetc(filepath);
+				while(reader!=EOF){
+					datastring[i]=reader;
+					reader=fgetc(filepath);
+					i++;
+				}
+				fclose(filepath);
+				datastring[i]='\0';
+				int num_of_rows=-1;
+				for(int j=0; j<i; j++){
+					if(datastring[j]=='\n'){
+						num_of_rows++;
+					}
+				}
+				if(num_of_rows<row){
+					printf("Row %d doesn't exists in table %s.\n",row,input1);
+					fclose(filepath);
+					fflush(stdin);
+					goto Start;
+				}
+				char modified_data[10000];
+				int num=0;
+				FILE *fileloc=fopen(loc,"w");
+				i=0;
+				int z=0;
+				while(datastring[i]!='\0'){
+					if(datastring[i]=='\n'){
+						num++;
+					}
+					if(num==row){
+						i++;
+						while(datastring[i]!='\n'){
+							i++;
+						}
+						num++;
+					}
+					modified_data[z]=datastring[i];
+					i++;
+					z++;
+				}
+				modified_data[z]='\0';
+				fputs(modified_data,fileloc);
+				printf("Row deleted.\n");
+				fclose(fileloc);
+				fflush(stdin);
+				goto Start;
+			}
+			else{
+				printf("Table %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+		}
+	}
 	else{
 		printf("Invalid command!\n");
 		fflush(stdin);
