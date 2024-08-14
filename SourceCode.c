@@ -318,6 +318,66 @@ void main(){
 			goto Start;
 		}
 	}
+	else if(equal_string(input1,"drop")){
+		scanf("%s",input1);
+		
+		if(equal_string(input1,"database")){
+			scanf("%s",input1);
+			char loc[]="Data/";
+			strcat(loc,input1);
+			
+			DIR* dir=opendir(loc);
+			if(dir){
+				closedir(dir);
+				rmdir(loc);
+				printf("Database %s removed.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+			else{
+				printf("Database %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+		}
+		else if(equal_string(input1,"table")){
+			scanf("%s",input1);
+			char loc[]="Data/";
+			strcat(loc,input1);
+			
+			DIR* dir=opendir(loc);
+			if(dir){
+				scanf("%s",input1);
+				closedir(dir);
+				strcat(loc,"/");
+				strcat(loc,input1);
+				strcat(loc,".csv");
+				FILE *filepath=fopen(loc,"r");
+				if(filepath){
+					fclose(filepath);
+					remove(loc);
+					printf("Table %s has been removed.\n",input1);
+					fflush(stdin);
+					goto Start;
+				}
+				else{
+					printf("Table %s doesn't exists.\n",input1);
+					fflush(stdin);
+					goto Start;
+				}
+			}
+			else{
+				printf("Database %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+		}
+		else{
+			printf("Error at %s.\n",input1);
+			fflush(stdin);
+			goto Start;
+		}
+	}
 	else{
 		printf("Invalid command!\n");
 		fflush(stdin);
