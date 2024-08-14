@@ -197,6 +197,64 @@ void main(){
 				goto Start;
 			}
 	}
+	else if(equal_string(input1,"show")){
+		scanf("%s",input1);
+		
+		if(equal_string(input1,"databases")){
+			printf("\n------------------\n");
+			printf("Databases:\n------------------\n");
+			DIR* d=opendir("Data");
+			struct dirent *dir;
+			dir=readdir(d);dir=readdir(d);
+			while((dir=readdir(d))!=NULL){
+				printf("%s\n",dir->d_name);
+			}
+			closedir(d);
+			printf("------------------\n");
+			fflush(stdin);
+			goto Start;
+		}
+		else if(equal_string(input1,"tables")){
+			scanf("%s",input1);
+			char database[]="Data/";
+			strcat(database,input1);
+			DIR* loc=opendir(database);
+			
+			if(loc){
+				printf("\n------------------\n");
+				printf("%s Tables:\n------------------\n",input1);
+				struct dirent *dir;
+				dir=readdir(loc);dir=readdir(loc);
+				char tablename[20];
+				while((dir=readdir(loc))!=NULL){
+					strcpy(tablename,dir->d_name);
+					int i=0;
+					while(tablename[i]!='.'){
+						printf("%c",tablename[i]);
+						i++;
+					}
+					printf("\n");
+				}
+				closedir(loc);
+				printf("------------------\n");
+				fflush(stdin);
+				goto Start;
+			}
+			else{
+				printf("Database %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+		}
+		else{
+			char ar[]="Error at ";
+			strcat(ar,input1);
+			strcat(ar,"\n");
+			printf("%s",ar);
+			fflush(stdin);
+			goto Start;
+		}
+	}
 	else{
 		printf("Invalid command!\n");
 		fflush(stdin);
