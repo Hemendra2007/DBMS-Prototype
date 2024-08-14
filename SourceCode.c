@@ -255,6 +255,69 @@ void main(){
 			goto Start;
 		}
 	}
+	else if(equal_string(input1,"view")){
+		scanf("%s",input1);
+		char database[]="Data/";
+		strcat(database,input1);
+		DIR* loc=opendir(database);
+		
+		if(loc){
+			scanf("%s",input1);
+			strcat(database,"/");
+			strcat(database,input1);
+			strcat(database,".csv");
+			FILE *tabledata=fopen(database,"r");
+			if(tabledata){
+				char datastring[10000];
+				char reader=fgetc(tabledata);
+				int i=0;
+				while(reader!=EOF){
+					datastring[i]=reader;
+					i++;
+					reader=fgetc(tabledata);
+				}
+				int j=0;
+				int count=0;
+				printf("\n------------------------------------------------\n");
+				while(i!=j){
+					if(datastring[j]==','){
+						printf("\t");
+						j+=2;
+					}
+					else if(datastring[j]=='\n'){
+						if(count==0){
+							printf("\n------------------------------------------------\n");
+							count=1;
+							j++;
+						}
+						else{
+							printf("\n");
+							j++;
+							continue;
+						}
+					}
+					else{
+						printf("%c",datastring[j]);
+						j++;
+					}
+				}
+				printf("------------------------------------------------\n");
+				
+				fflush(stdin);
+				goto Start;
+			}
+			else{
+				printf("Table doesn't exists.\n");
+				fflush(stdin);
+				goto Start;
+			}
+		}
+		else{
+			printf("Database %s doesn't exists.\n",input1);
+			fflush(stdin);
+			goto Start;
+		}
+	}
 	else{
 		printf("Invalid command!\n");
 		fflush(stdin);
