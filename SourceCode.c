@@ -137,6 +137,66 @@ void main(){
 			goto Start;
 		}
 	}
+	else if(equal_string(input1,"insert")){
+		scanf("%s",input1);
+		char loc[]="Data/";
+			strcat(loc,input1);
+			
+			DIR* dir=opendir(loc);
+			if(dir){
+				scanf("%s",input1);
+				strcat(loc,"/");
+				strcat(loc,input1);
+				strcat(loc,".csv");
+				FILE *filepath=fopen(loc,"r");
+				if(filepath){
+					int count=1;
+					char reader=fgetc(filepath);
+					while(reader!='\n'){
+						if(reader==','){
+							count+=1;
+							reader=fgetc(filepath);
+						}
+						reader=fgetc(filepath);
+					}
+					fclose(filepath);
+					char mainstring[10000];
+					int i=0;
+					FILE *filepath=fopen(loc,"r");
+					reader=fgetc(filepath);
+					while(reader!=EOF){
+						mainstring[i]=reader;
+						reader=fgetc(filepath);
+						i++;
+					}
+					int j=i;
+					for(j; j<count+i; j++){
+						scanf("%s",input1);
+						strcat(mainstring,input1);
+						if(i!=count-1){
+							strcat(mainstring,", ");
+						}
+					}
+					strcat(mainstring,"\n");
+					FILE *filedest=fopen(loc,"w");
+					fputs(mainstring,filedest);
+					fclose(filedest);
+					printf("Data Added!\n");
+					fflush(stdin);
+					goto Start;
+				}
+				else{
+					printf("Table %s doesn't exists.\n",input1);
+					fflush(stdin);
+					goto Start;
+				}
+			}
+			else{
+				printf("Database %s doesn't exists.\n",input1);
+				fflush(stdin);
+				goto Start;
+			}
+	}
 	else{
 		printf("Invalid command!\n");
 		fflush(stdin);
