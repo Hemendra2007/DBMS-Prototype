@@ -18,6 +18,14 @@
 5. **Control Flow**:
    - The program uses `goto` statements to loop back to the start of the input prompt after each command execution or error, allowing the user to continue interacting with the program.
 
+6. **ScreenShots**:
+
+![image](https://github.com/user-attachments/assets/60881473-31e2-46ae-b199-b48601069491)
+![image](https://github.com/user-attachments/assets/3f000563-4038-480f-abcb-81da8f49b6dc)
+![image](https://github.com/user-attachments/assets/bbb0941f-7864-4a32-8a75-bc76ae840515)
+
+
+
 ### Key Takeaways:
 
 - The program simulates basic database operations using file and directory management in C.
